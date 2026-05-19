@@ -25,17 +25,16 @@ class FastDetectGPT:
         *,
         scoring_model_name: str,
         sampling_model_name: str,
-        device: str,
         cache_dir: str,
         extra_distrib_params: dict[str, dict[str, float]],
     ):
         self.criterion_fn = get_sampling_discrepancy_analytic
         self.scoring_tokenizer = load_tokenizer(scoring_model_name, cache_dir)
-        self.scoring_model = load_model(scoring_model_name, device, cache_dir)
+        self.scoring_model = load_model(scoring_model_name, cache_dir)
         self.scoring_model.eval()
         if sampling_model_name != scoring_model_name:
             self.sampling_tokenizer = load_tokenizer(sampling_model_name, cache_dir)
-            self.sampling_model = load_model(sampling_model_name, device, cache_dir)
+            self.sampling_model = load_model(sampling_model_name, cache_dir)
             self.sampling_model.eval()
         # To obtain probability values that are easy for users to understand, we assume normal distributions
         # of the criteria and statistic the parameters on a group of dev samples. The normal distributions are defined
