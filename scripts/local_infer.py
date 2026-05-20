@@ -36,6 +36,9 @@ class FastDetectGPT:
             self.sampling_tokenizer = load_tokenizer(sampling_model_name, cache_dir)
             self.sampling_model = load_model(sampling_model_name, cache_dir)
             self.sampling_model.eval()
+
+        self.sampling_model_name = sampling_model_name
+        self.scoring_model_name = scoring_model_name
         # To obtain probability values that are easy for users to understand, we assume normal distributions
         # of the criteria and statistic the parameters on a group of dev samples. The normal distributions are defined
         # by mu0 and sigma0 for human texts and by mu1 and sigma1 for AI texts. We set sigma1 = 2 * sigma0 to
