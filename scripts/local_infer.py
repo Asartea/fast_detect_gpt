@@ -86,11 +86,11 @@ class FastDetectGPT:
             return_tensors="pt",
             padding=True,
             return_token_type_ids=False,
-        ).to(self.args.device)
+        )
         labels = tokenized.input_ids[:, 1:]
         with torch.no_grad():
             logits_score = self.scoring_model(**tokenized).logits[:, :-1]
-            if self.args.sampling_model_name == self.args.scoring_model_name:
+            if self.sampling_model_name == self.scoring_model_name:
                 logits_ref = logits_score
             else:
                 tokenized = self.sampling_tokenizer(
@@ -99,7 +99,7 @@ class FastDetectGPT:
                     return_tensors="pt",
                     padding=True,
                     return_token_type_ids=False,
-                ).to(self.args.device)
+                )
                 assert torch.all(
                     tokenized.input_ids[:, 1:] == labels
                 ), "Tokenizer is mismatch."
